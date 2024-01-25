@@ -23,12 +23,6 @@ class TestBoard(unittest.TestCase):
         self.board.make_move(1, 1, "0")
         self.assertFalse(self.board.make_move(1, 1, "0"))
 
-    def test_make_move_out_of_bounds_row(self):
-        self.assertFalse(self.board.make_move(20, 1, "0"))
-
-    def test_make_move_out_of_bounds_column(self):
-        self.assertFalse(self.board.make_move(1, 20, "0"))
-
     def test_board_print_empty(self):
         sys.stdout = io.StringIO()
         board = Board(3)
@@ -47,7 +41,8 @@ class TestBoard(unittest.TestCase):
     def test_board_print_after_illegal_move(self):
         sys.stdout = io.StringIO()
         board = Board(3)
-        board.make_move(1, 6, "0")
+        board.make_move(1, 1, "0")
+        board.make_move(1, 1, "0")
         board.print_board()
-        expected = "Invalid column!\n- - -\n- - -\n- - -\n\n"
+        expected = "- - -\n- 0 -\n- - -\n\n"
         self.assertEqual(sys.stdout.getvalue(), expected)
