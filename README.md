@@ -9,3 +9,4 @@
 ### Weekly reports
 
 [Week 1](./documentation/report_week1.md)
+[Week 2](./documentation/report_week2.md)
