@@ -3,6 +3,7 @@
 ## Gomoku (Tic-Tac-Toe) AI
 
 [![CI](https://github.com/Tartsi/tiralabra/actions/workflows/main.yml/badge.svg)](https://github.com/Tartsi/tiralabra/actions/workflows/main.yml)
+[![codecov](https://codecov.io/github/Tartsi/tiralabra/graph/badge.svg?token=jBrkhEvqv4)](https://codecov.io/github/Tartsi/tiralabra)
 
 ### Documentation:
 
