@@ -6,4 +6,4 @@
   - Started implementing core of the program, in this case gameboard. (1h 30 minutes)
 - Thursday 25.01.2024:
   - Studied external material, code examples (1h)
-  - Wrote game-functionality and more comprehensive testing, refactored code (2h)
+  - Wrote game-functionality and more comprehensive testing, refactored code (3h)
