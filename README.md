@@ -10,5 +10,5 @@
 
 ### Weekly reports:
 
-- [Week 1](./documentation/report_week1.md)
-- [Week 2](./documentation/report_week2.md)
+- [Week 1](./documentation/weekly_reports/report_week1.md)
+- [Week 2](./documentation/weekly_reports/report_week2.md)
