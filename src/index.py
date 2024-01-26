@@ -1,5 +1,9 @@
 """
 Used to start the application
 """
+
+from ui import UI
+
 if __name__ == "__main__":
-    pass
+    ui = UI()
+    ui.start()
