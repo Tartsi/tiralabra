@@ -45,15 +45,105 @@ class Logic:
         print(f"Square ({row}, {column}) is already occupied!")
         return False
 
-    def check_draw(self):
-        """Check if the game board is full
+    def check_horizontal(self, row, col, player):
+        """Checks if a player has 5 pieces in a row horizontally
+
+        Args:
+            row int: player's row on the board
+            column int: player's column on the board
+            player str: player, 'X' or '0'
 
         Returns:
-            bool: True if the game board is full, False otherwise
+            bool: True if the player has 5 pieces horizontally, False otherwise
+        """
+        count = 0
+
+        for i in range(max(0, col-4), min(len(self.board.board[0]), col+5)):
+            if self.board.board[row][i] == player:
+                count += 1
+                if count == 5:
+                    return True
+            else:
+                count = 0
+
+        return False
+
+    def check_vertical(self, row, col, player):
+        """Checks if a player has 5 pieces in a row vertically
+
+        Args:
+            row int: player's row on the board
+            column int: player's column on the board
+            player str: player, 'X' or '0'
+
+        Returns:
+            bool: True if the player has 5 pieces vertically, False otherwise
+        """
+        count = 0
+
+        for i in range(max(0, row-4), min(len(self.board.board), row+5)):
+            if self.board.board[i][col] == player:
+                count += 1
+                if count == 5:
+                    return True
+            else:
+                count = 0
+        return False
+
+    def check_diagonals(self, row, col, player):
+        """Checks if a player has 5 pieces in a row diagonally
+
+        Args:
+            row (int): Player's row on the board
+            col (int): Player's column on the board
+            player (str): Player, 'X' or '0'
+
+        Returns:
+            bool: True if player has 5 pieces diagonally, False otherwise
         """
 
-        for row in self.board.board:
-            if "-" in row:
-                return False
+        # Checks diagonal from left to right (\)
+        count = 0
 
-        return True
+        for i in range(-4, 5):
+
+            if 0 <= row+i < len(self.board.board) and 0 <= col+i < len(self.board.board[0]):
+                if self.board.board[row+i][col+i] == player:
+                    count += 1
+                    if count == 5:
+                        return True
+                else:
+                    count = 0
+
+        # Checks diagonal from right to left (/)
+        count = 0
+
+        for j in range(-4, 5):
+            if 0 <= row+j < len(self.board.board) and 0 <= col-j < len(self.board.board[0]):
+                if self.board.board[row+j][col-j] == player:
+                    count += 1
+                    if count == 5:
+                        return True
+                else:
+                    count = 0
+
+        return False
+
+    def check_win(self, row, column, player):
+        """Checks if a player has 5 pieces in a row after moving
+
+        Args:
+            row (int): Player's row on the board after move
+            column (int): Player's column on the board after move
+            player (str): Player who made the move
+
+        Returns:
+            bool: True if 5 pieces are found in a row, False otherwise
+        """
+        if self.check_horizontal(row, column, player) or \
+                self.check_vertical(row, column, player) or \
+                self.check_diagonals(row, column, player):
+            print(f"Player {player} has won the game!")
+            return True
+
+        return False
