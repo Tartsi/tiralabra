@@ -22,6 +22,28 @@ class Board:
 
         return False
 
+    # def undo_move(self, row, column, player):
+    #     """Undos the previously made move on the board
+    #     Necessary for AI's minimax-algorithm"""
+    #     pass
+
+    def get_possible_moves(self):
+        """Returns a list of possible moves"""
+        # Move Pruning Optimization will be applied here
+
+        # Use sets for faster lookups O(1) for later usage
+        legal = set()
+
+        for row in range(len(self.board)):
+
+            for column in range(len(self.board)):
+
+                if self.board[row][column] == '-':
+
+                    legal.add((row, column))
+
+        return legal
+
     def print_board(self):
         """Prints the current state of the board"""
 

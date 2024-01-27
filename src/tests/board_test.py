@@ -46,3 +46,16 @@ class TestBoard(unittest.TestCase):
         board.print_board()
         expected = "- - -\n- 0 -\n- - -\n\n"
         self.assertEqual(sys.stdout.getvalue(), expected)
+
+    def test_get_possible_moves_empty_board(self):
+        board = Board(3)
+        expected_possible_moves = 9
+        self.assertEqual(len(board.get_possible_moves()),
+                         expected_possible_moves)
+
+    def test_get_possible_moves_non_empty_board(self):
+        board = Board(3)
+        board.make_move(1, 1, "0")
+        expected_possible_moves = 8
+        self.assertEqual(len(board.get_possible_moves()),
+                         expected_possible_moves)

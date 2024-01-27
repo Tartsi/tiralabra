@@ -8,7 +8,8 @@ disable=raw-checker-failed,
         useless-suppression,
         use-symbolic-message-instead,
         broad-exception-caught,
-        too-few-public-methods
+        too-few-public-methods,
+        consider-using-enumerate
 
 
 [FORMAT]
