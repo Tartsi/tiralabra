@@ -28,7 +28,7 @@ class Board:
     #     pass
 
     def get_possible_moves(self):
-        """Returns a list of possible moves"""
+        """Returns a set of possible moves"""
         # Move Pruning Optimization will be applied here
 
         # Use sets for faster lookups O(1) for later usage
