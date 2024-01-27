@@ -7,3 +7,7 @@
 - Thursday 25.01.2024:
   - Studied external material, code examples (1h)
   - Wrote game-functionality and more comprehensive testing, refactored code (3h)
+- Friday 26.01.2024:
+  - Studied external material, code examples; especially related to MiniMax-algorithm, and alpha-beta pruning (2h 30 minutes)
+  - Added more game-functionality + tests related to win-checks, code refactoring (1h 30 minutes)
+  - Added a UI and a simple 'Stupid AI' to test the gameboard and to test the user interface manually (1h)
