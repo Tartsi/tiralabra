@@ -1,4 +1,4 @@
-# Progress report week 2:
+# Progress report week 3:
 
 - Wednesday 31.01.2024:
   - Studied external material about Minimax-algorithm. (1h 30min)
