@@ -17,7 +17,7 @@ class Logic:
         self.board = board
         # X represents Black, which starts first in Gomoku
         self.current_turn = 'X'
-        self.game_over = False
+        self.game_over = False  # Redundant?
 
     def make_move(self, row, column, player):
         """Moves players piece on board if not occupied

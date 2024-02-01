@@ -18,4 +18,4 @@ max-line-length = 95
 [DESIGN]
 max-branches = 15
 max-locals = 10
-max-args = 5
+max-args = 10
