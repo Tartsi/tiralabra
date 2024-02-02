@@ -37,23 +37,6 @@ class Board:
 
         return False
 
-    def get_possible_moves(self):
-        """Returns a set of possible moves"""
-        # Move Pruning Optimization will be applied here
-
-        # Use sets for faster lookups O(1) for later usage
-        legal = set()
-
-        for row in range(len(self.board)):
-
-            for column in range(len(self.board)):
-
-                if self.board[row][column] == '-':
-
-                    legal.add((row, column))
-
-        return legal
-
     def print_board(self):
         """Prints the current state of the board"""
 
