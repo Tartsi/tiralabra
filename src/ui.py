@@ -2,7 +2,8 @@
 Responsible for interactions with the user
 """
 
-from random import choice
+from copy import deepcopy
+from services.ai import AI
 from services.board import Board
 from services.logic import Logic
 
@@ -13,7 +14,8 @@ class UI:
 
     def __init__(self):
         self.board = Board()
-        self.logic = Logic(self.board)
+        self.logic = Logic()
+        self.ai = AI()
 
     def start(self):
         """Starts the game
@@ -42,13 +44,14 @@ class UI:
                     col_input = int(
                         input("Enter your column number please: "))
 
-                    if self.logic.make_move(row_input, col_input, '0'):
+                    if self.logic.make_move(row_input, col_input, '0', self.board):
                         print(
                             f"Succesfully moved to square ({row_input} and {col_input})")
                         self.board.print_board()
                         users_turn = False
 
-                    if self.logic.check_win(row_input, col_input, '0'):
+                    if self.logic.check_win(row_input, col_input, '0', self.board):
+                        print("0 won!")
                         print("Game over! Thanks for playing.")
                         return
                 except ValueError:
@@ -62,11 +65,16 @@ class UI:
                 if not empty_cells:
                     return
 
-                row, column = choice(empty_cells)
-                self.logic.make_move(row, column, 'X')
+                cloned_board = deepcopy(self.board)
+
+                row, column = self.ai.minimax(2, True, cloned_board)[1]
+
+                self.logic.make_move(row, column, "X", self.board)
+
                 print(f"AI moved to square ({row}, {column})")
 
-                if self.logic.check_win(row, column, 'X'):
+                if self.logic.check_win(row, column, 'X', self.board):
+                    print("X won!")
                     print("Game over! Thanks for playing.")
                     return
 

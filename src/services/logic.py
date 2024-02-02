@@ -11,7 +11,7 @@ class Logic:
     def __init__(self):
         """Initializes the game logic
         """
-        pass
+        return
 
     def make_move(self, row, column, player, board):
         """Moves players piece on board if not occupied

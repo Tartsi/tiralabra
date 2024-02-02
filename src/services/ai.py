@@ -102,58 +102,61 @@ class AI():
 
         return possible_moves
 
-    # def minimax(self, depth, maximizing, board):
-    #     """Minimax-algorithm used for decision making
+    def minimax(self, depth, maximizing, board):
+        """Minimax-algorithm used for decision making
 
-    #     Args:
-    #         depth (int): How 'deep' the algorithm checks for potential moves
-    #         maximizing (bool): True or False whether the algorithm tries to
-    #         maximize potential outcome of the moves evaluation, or minimize it
-    #         board (Board): Clone of the game board the AI uses during simulations
-    #     """
-    #     # first without alpha-beta pruning
+        Args:
+            depth (int): How 'deep' the algorithm checks for potential moves
+            maximizing (bool): True or False whether the algorithm tries to
+            maximize potential outcome of the moves evaluation, or minimize it
+            board (Board): Clone of the game board the AI uses during simulations
+        """
+        # first without alpha-beta pruning
 
-    #     if depth == 0:
-    #         return self.evaluate_board(board)
+        if depth == 0:
+            # Return evaluation score and no move
+            return self.evaluate_board(board), None
 
-    #     best_move = None
+        best_move = None
 
-    #     # Hard code AI to X for now
-    #     if maximizing:
+        # Hard code AI to X for now
+        if maximizing:
 
-    #         max_evaluation = float("-inf")
+            max_evaluation = float("-inf")
 
-    #         for move in self.get_possible_moves(board):
+            for move in self.get_possible_moves(board):
 
-    #             board.make_move(move[0], move[1], "X")
+                board.make_move(move[0], move[1], "X")
 
-    #             if self.logic.check_win(move[0], move[1], "X", board):
-    #                 made_evaluation = 100
-    #             else:
-    #                 made_evaluation = self.minimax(depth-1, False, board)
+                if self.logic.check_win(move[0], move[1], "X", board):
+                    made_evaluation = 100
+                else:
+                    made_evaluation, _ = self.minimax(depth-1, False, board)
 
-    #             board.undo_move()
+                board.undo_move()
 
-    #             if made_evaluation > max_evaluation:
-    #                 max_evaluation = made_evaluation
-    #                 best_move = move
-    #     else:
+                if made_evaluation > max_evaluation:
+                    max_evaluation = made_evaluation
+                    best_move = move
 
-    #         min_evaluation = float("inf")
+                return max_evaluation, best_move
+        else:
 
-    #         for move in self.get_possible_moves(board):
+            min_evaluation = float("inf")
 
-    #             board.make_move(move[0], move[1], "0")
+            for move in self.get_possible_moves(board):
 
-    #             if self.logic.check_win(move[0], move[1], "0", board):
-    #                 made_evaluation = -100
-    #             else:
-    #                 made_evaluation = self.minimax(depth-1, False, board)
+                board.make_move(move[0], move[1], "0")
 
-    #             board.undo_move()
+                if self.logic.check_win(move[0], move[1], "0", board):
+                    made_evaluation = -100
+                else:
+                    made_evaluation, _ = self.minimax(depth-1, False, board)
 
-    #             if made_evaluation < min_evaluation:
-    #                 min_evaluation = made_evaluation
-    #                 best_move = move
+                board.undo_move()
 
-    #     return best_move
+                if made_evaluation < min_evaluation:
+                    min_evaluation = made_evaluation
+                    best_move = move
+
+            return min_evaluation, best_move
