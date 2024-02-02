@@ -8,18 +8,12 @@ class Logic:
     Handles the game logic i.e functionalities
     """
 
-    def __init__(self, board):
+    def __init__(self):
         """Initializes the game logic
-
-        Args:
-            board (Board): Board to be used for the game
         """
-        self.board = board
-        # X represents Black, which starts first in Gomoku
-        self.current_turn = 'X'
-        self.game_over = False  # Redundant?
+        pass
 
-    def make_move(self, row, column, player):
+    def make_move(self, row, column, player, board):
         """Moves players piece on board if not occupied
 
         Args:
@@ -30,22 +24,22 @@ class Logic:
         Returns:
             bool: True or False whether the move was successful or not
         """
-        if row < 0 or row >= len(self.board.board):
+        if row < 0 or row >= len(board.board):
             print("Invalid row!")
             return False
 
-        if column < 0 or column >= len(self.board.board):
+        if column < 0 or column >= len(board.board):
             print("Invalid column!")
             return False
 
-        if self.board.board[row][column] == "-":
-            self.board.make_move(row, column, player)
+        if board.board[row][column] == "-":
+            board.make_move(row, column, player)
             return True
 
         print(f"Square ({row}, {column}) is already occupied!")
         return False
 
-    def check_horizontal(self, row, col, player):
+    def check_horizontal(self, row, col, player, board):
         """Checks if a player has 5 pieces in a row horizontally
 
         Args:
@@ -58,8 +52,8 @@ class Logic:
         """
         count = 0
 
-        for i in range(max(0, col-4), min(len(self.board.board[0]), col+5)):
-            if self.board.board[row][i] == player:
+        for i in range(max(0, col-4), min(len(board.board[0]), col+5)):
+            if board.board[row][i] == player:
                 count += 1
                 if count == 5:
                     return True
@@ -68,7 +62,7 @@ class Logic:
 
         return False
 
-    def check_vertical(self, row, col, player):
+    def check_vertical(self, row, col, player, board):
         """Checks if a player has 5 pieces in a row vertically
 
         Args:
@@ -81,8 +75,8 @@ class Logic:
         """
         count = 0
 
-        for i in range(max(0, row-4), min(len(self.board.board), row+5)):
-            if self.board.board[i][col] == player:
+        for i in range(max(0, row-4), min(len(board.board), row+5)):
+            if board.board[i][col] == player:
                 count += 1
                 if count == 5:
                     return True
@@ -90,7 +84,7 @@ class Logic:
                 count = 0
         return False
 
-    def check_diagonals(self, row, col, player):
+    def check_diagonals(self, row, col, player, board):
         """Checks if a player has 5 pieces in a row diagonally
 
         Args:
@@ -107,8 +101,8 @@ class Logic:
 
         for i in range(-4, 5):
 
-            if 0 <= row+i < len(self.board.board) and 0 <= col+i < len(self.board.board[0]):
-                if self.board.board[row+i][col+i] == player:
+            if 0 <= row+i < len(board.board) and 0 <= col+i < len(board.board[0]):
+                if board.board[row+i][col+i] == player:
                     count += 1
                     if count == 5:
                         return True
@@ -119,8 +113,8 @@ class Logic:
         count = 0
 
         for j in range(-4, 5):
-            if 0 <= row+j < len(self.board.board) and 0 <= col-j < len(self.board.board[0]):
-                if self.board.board[row+j][col-j] == player:
+            if 0 <= row+j < len(board.board) and 0 <= col-j < len(board.board[0]):
+                if board.board[row+j][col-j] == player:
                     count += 1
                     if count == 5:
                         return True
@@ -129,7 +123,7 @@ class Logic:
 
         return False
 
-    def check_win(self, row, column, player):
+    def check_win(self, row, column, player, board):
         """Checks if a player has 5 pieces in a row after moving
 
         Args:
@@ -140,10 +134,9 @@ class Logic:
         Returns:
             bool: True if 5 pieces are found in a row, False otherwise
         """
-        if self.check_horizontal(row, column, player) or \
-                self.check_vertical(row, column, player) or \
-                self.check_diagonals(row, column, player):
-            print(f"Player {player} has won the game!")
+        if self.check_horizontal(row, column, player, board) or \
+                self.check_vertical(row, column, player, board) or \
+                self.check_diagonals(row, column, player, board):
             return True
 
         return False
