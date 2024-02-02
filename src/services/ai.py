@@ -15,7 +15,7 @@ class AI():
         """Initialize the AI
         """
         self.board = Board()
-        self.logic = Logic(self.board)
+        self.logic = Logic()
         self.made_moves = 0
 
     def evaluate_board(self, board):
