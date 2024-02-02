@@ -6,3 +6,6 @@
 - Thursday 01.02.2024:
   - Studied external material about Minimax-algorithm and possible solutions. (1h)
   - Added more functionality to Minimax-algorithm and its helper functions. (3h30min)
+- Friday 02.02.2024:
+  - Studied possible code refactoring opportunities. (30 minutes)
+  - Actualized said code refactoring. (3h)
