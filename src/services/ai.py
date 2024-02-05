@@ -102,7 +102,7 @@ class AI():
 
         return possible_moves
 
-    def minimax(self, depth, maximizing, board):
+    def minimax(self, depth, maximizing, board, alpha, beta):
         """Minimax-algorithm used for decision making
 
         Args:
@@ -110,8 +110,9 @@ class AI():
             maximizing (bool): True or False whether the algorithm tries to
             maximize potential outcome of the moves evaluation, or minimize it
             board (Board): Clone of the game board the AI uses during simulations
+            alpha (int): The alpha cut-off for the alpha-beta pruning optimization
+            beta (int): The beta cut-off for the alpha-beta pruning optimization
         """
-        # first without alpha-beta pruning
 
         if depth == 0:
             # Return evaluation score and no move
@@ -131,7 +132,8 @@ class AI():
                 if self.logic.check_win(move[0], move[1], "X", board):
                     made_evaluation = 100
                 else:
-                    made_evaluation, _ = self.minimax(depth-1, False, board)
+                    made_evaluation, _ = self.minimax(
+                        depth-1, False, board, alpha, beta)
 
                 board.undo_move()
 
@@ -139,7 +141,12 @@ class AI():
                     max_evaluation = made_evaluation
                     best_move = move
 
-                return max_evaluation, best_move
+                alpha = max(alpha, made_evaluation)
+
+                if beta <= alpha:
+                    break
+
+            return max_evaluation, best_move
         else:
 
             min_evaluation = float("inf")
@@ -151,12 +158,18 @@ class AI():
                 if self.logic.check_win(move[0], move[1], "0", board):
                     made_evaluation = -100
                 else:
-                    made_evaluation, _ = self.minimax(depth-1, False, board)
+                    made_evaluation, _ = self.minimax(
+                        depth-1, False, board, alpha, beta)
 
                 board.undo_move()
 
                 if made_evaluation < min_evaluation:
                     min_evaluation = made_evaluation
                     best_move = move
+
+                beta = min(beta, made_evaluation)
+
+                if beta <= alpha:
+                    break
 
             return min_evaluation, best_move

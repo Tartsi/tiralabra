@@ -54,20 +54,14 @@ class UI:
                         print("0 won!")
                         print("Game over! Thanks for playing.")
                         return
-                except ValueError:
-                    print('Please enter integers only!')
+                except Exception:
+                    print('Invalid input, try again!')
             else:
-                # Testing purpose AI-here
-                # This will be replaced later with a more complex AI
-
-                empty_cells = [(i, j) for i in range(len(self.board.board)) for j in range(
-                    len(self.board.board[0])) if self.board.board[i][j] == '-']
-                if not empty_cells:
-                    return
 
                 cloned_board = deepcopy(self.board)
 
-                row, column = self.ai.minimax(2, True, cloned_board)[1]
+                row, column = self.ai.minimax(
+                    2, True, cloned_board, float("-inf"), float("inf"))[1]
 
                 self.logic.make_move(row, column, "X", self.board)
 
