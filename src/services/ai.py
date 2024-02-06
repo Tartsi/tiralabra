@@ -85,24 +85,37 @@ class AI():
 
         return count
 
-    def get_possible_moves(self, board):
-        """Returns a set of possible moves"""
-        # Move Pruning Optimization will be applied here
+    def get_possible_moves(self, board, all_moves_made):
+        """Returns a set of possible moves
+
+        Args:
+            board (board): Board to get possible moves from
+            all_moves_made (set()): Set/List to hold possible move set
+
+        Returns:
+            set(): Set of possible moves
+        """
+
+        if not all_moves_made:
+            start_point = (len(board.board) // 2)-1
+            return [(start_point, start_point)]
 
         # Use sets for faster lookups O(1) for later usage
         possible_moves = set()
 
-        for row in range(len(board.board)):
+        for move in all_moves_made:
+            row, column = move
 
-            for column in range(len(board.board)):
+            for i in range(max(0, row - 2), min(len(board.board), row + 3)):
 
-                if board.board[row][column] == '-':
+                for j in range(max(0, column - 2), min(len(board.board), column + 3)):
 
-                    possible_moves.add((row, column))
+                    if board.board[i][j] == "-":
+                        possible_moves.add((i, j))
 
         return possible_moves
 
-    def minimax(self, depth, maximizing, board, alpha, beta):
+    def minimax(self, depth, maximizing, board, alpha, beta, all_moves_made):
         """Minimax-algorithm used for decision making
 
         Args:
@@ -125,7 +138,7 @@ class AI():
 
             max_evaluation = float("-inf")
 
-            for move in self.get_possible_moves(board):
+            for move in self.get_possible_moves(board, all_moves_made):
 
                 board.make_move(move[0], move[1], "X")
 
@@ -133,7 +146,7 @@ class AI():
                     made_evaluation = 100
                 else:
                     made_evaluation, _ = self.minimax(
-                        depth-1, False, board, alpha, beta)
+                        depth-1, False, board, alpha, beta, all_moves_made)
 
                 board.undo_move()
 
@@ -151,7 +164,7 @@ class AI():
 
             min_evaluation = float("inf")
 
-            for move in self.get_possible_moves(board):
+            for move in self.get_possible_moves(board, all_moves_made):
 
                 board.make_move(move[0], move[1], "0")
 
@@ -159,7 +172,7 @@ class AI():
                     made_evaluation = -100
                 else:
                     made_evaluation, _ = self.minimax(
-                        depth-1, False, board, alpha, beta)
+                        depth-1, False, board, alpha, beta, all_moves_made)
 
                 board.undo_move()
 

@@ -16,6 +16,7 @@ class UI:
         self.board = Board()
         self.logic = Logic()
         self.ai = AI()
+        self.all_moves_made = set()
 
     def start(self):
         """Starts the game
@@ -40,13 +41,14 @@ class UI:
 
                     print()
                     row_input = int(
-                        input("Enter your row number please: "))
+                        input("Row: "))-1
                     col_input = int(
-                        input("Enter your column number please: "))
+                        input("Column: "))-1
 
                     if self.logic.make_move(row_input, col_input, '0', self.board):
                         print(
-                            f"Succesfully moved to square ({row_input} and {col_input})")
+                            f"Moved to square ({row_input} and {col_input})")
+                        self.all_moves_made.add((row_input, col_input))
                         self.board.print_board()
                         users_turn = False
 
@@ -61,11 +63,13 @@ class UI:
                 cloned_board = deepcopy(self.board)
 
                 row, column = self.ai.minimax(
-                    2, True, cloned_board, float("-inf"), float("inf"))[1]
+                    2, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
 
                 self.logic.make_move(row, column, "X", self.board)
 
                 print(f"AI moved to square ({row}, {column})")
+
+                self.all_moves_made.add((row, column))
 
                 if self.logic.check_win(row, column, 'X', self.board):
                     print("X won!")
