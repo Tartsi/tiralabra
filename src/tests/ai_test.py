@@ -43,6 +43,6 @@ class TestBoard(unittest.TestCase):
     def test_get_possible_moves_non_empty_board(self):
         board = self.ai.board
         board.make_move(1, 1, "0")
-        expected_possible_moves = 15
+        expected_possible_moves = 8
         self.assertEqual(len(self.ai.get_possible_moves(board, [(1, 1)])),
                          expected_possible_moves)

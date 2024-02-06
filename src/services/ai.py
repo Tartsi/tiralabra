@@ -106,9 +106,9 @@ class AI():
         for move in all_moves_made:
             row, column = move
 
-            for i in range(max(0, row - 2), min(len(board.board), row + 3)):
+            for i in range(max(0, row - 2), min(len(board.board), row + 2)):
 
-                for j in range(max(0, column - 2), min(len(board.board), column + 3)):
+                for j in range(max(0, column - 2), min(len(board.board), column + 2)):
 
                     if board.board[i][j] == "-":
                         possible_moves.add((i, j))

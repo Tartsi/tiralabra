@@ -63,7 +63,7 @@ class UI:
                 cloned_board = deepcopy(self.board)
 
                 row, column = self.ai.minimax(
-                    2, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
+                    3, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
 
                 self.logic.make_move(row, column, "X", self.board)
 
