@@ -7,7 +7,8 @@
 
 ### Documentation:
 
-[Project definition](./documentation/definition.md)
+- [Project definition](./documentation/definition.md)
+- [Testing document](./documentation/testing_report.md)
 
 ### Weekly reports:
 
