@@ -18,7 +18,7 @@ class UI:
         self.ai = AI()
         self.all_moves_made = set()
 
-    def start(self):
+    def start_game(self):
         """Starts the game
         """
 
@@ -47,7 +47,7 @@ class UI:
 
                     if self.logic.make_move(row_input, col_input, '0', self.board):
                         print(
-                            f"Moved to square ({row_input} and {col_input})")
+                            f"Moved to square ({row_input+1} and {col_input+1})")
                         self.all_moves_made.add((row_input, col_input))
                         self.board.print_board()
                         users_turn = False
@@ -60,18 +60,30 @@ class UI:
                     print('Invalid input, try again!')
             else:
 
+                # AI always starts from the middle of the board
+                if not self.all_moves_made:
+                    start_point = (len(self.board.board) // 2)-1
+                    self.board.make_move(start_point, start_point, 'X')
+                    self.all_moves_made.add((start_point, start_point))
+                    print(
+                        f"AI moved to square ({start_point+1}, {start_point+1})")
+                    self.board.print_board()
+                    users_turn = True
+                    continue
+
                 cloned_board = deepcopy(self.board)
 
                 row, column = self.ai.minimax(
-                    3, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
+                    2, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
 
                 self.logic.make_move(row, column, "X", self.board)
 
-                print(f"AI moved to square ({row}, {column})")
+                print(f"AI moved to square ({row+1}, {column+1})")
 
                 self.all_moves_made.add((row, column))
 
                 if self.logic.check_win(row, column, 'X', self.board):
+                    self.board.print_board()
                     print("X won!")
                     print("Game over! Thanks for playing.")
                     return

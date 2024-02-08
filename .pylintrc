@@ -14,7 +14,7 @@ disable=raw-checker-failed,
 
 
 [FORMAT]
-max-line-length = 95
+max-line-length = 100
 
 [DESIGN]
 max-branches = 15
