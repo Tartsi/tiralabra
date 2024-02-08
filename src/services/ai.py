@@ -19,89 +19,108 @@ class AI():
         self.made_moves = 0
 
     def evaluate_board(self, board):
-        """
-        Evaluates the current board state from AI's perspective
-        """
+        """Evaluates the current board state and returns a value of it
 
+        Args:
+            board (board): Current board state
+
+        Returns:
+            int: Value of the current board state
+        """
         score = 0
 
         for row in range(len(board.board)):
 
             for column in range(len(board.board)):
 
-                if self.board.board[row][column] == "X":  # 'X' Hard coded for AI
-                    score += self.evaluate_position(row, column, "X")
-                elif self.board.board[row][column] == "0":
-                    score -= self.evaluate_position(row, column, "0")
+                if board.board[row][column] != "-":
+                    player = board.board[row][column]
+                    score_multiplier = 1 if player == "X" else -1
+                    score += score_multiplier * \
+                        self.evaluate_position(board, row, column, player)
 
         return score
 
-    def evaluate_position(self, row, column, player):
-        """Evaluates a singular position from AI's perspective
+    def evaluate_position(self, board, row, column, player):
+        """Evaluates a position on the current board state and returns a value
 
         Args:
-            row (int): Row of the square to be evaluated on game board
-            column (int): Column of the square to be evaluated on game board
-            player (str): Player to be evaluated on game board
+            board (board): Current board state
+            row (int): Row number for the position
+            column (int): Column number for the position
+            player (str): Player whose position is to be evaluated
+
+        Returns:
+            int: Value for the position
         """
 
-        # Very simple implementation for now, can be improved
-
-        score = 0
-
-        # Encompasses vertical, horizontal and diagonal positions
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        pos_score = 0
 
         for delta_row, delta_column in directions:
-            score += self.count_consecutive(row,
-                                            column, player, delta_row, delta_column)
 
-        return score
+            line_score, open_ends = self.evaluate_line(
+                board, row, column, player, delta_row, delta_column)
 
-    def count_consecutive(self, row, column, player, delta_row, delta_column):
-        """Counts the number of consecutive pieces from a given position
-           Helper function for evaluating a move's value
+            if line_score == 3:
+                pos_score += 50 if open_ends > 0 else 30
+            elif line_score == 2:
+                pos_score += 10 if open_ends == 2 else 5
+            elif line_score == 1:
+                pos_score += 3 if open_ends == 2 else 1
+            else:
+                pos_score += line_score * (1 + open_ends)
+
+        return pos_score
+
+    def evaluate_line(self, board, row, column, player, delta_row, delta_column):
+        """Finds and returns potential line scores (consecutive pieces) and number of open ends
 
         Args:
-            row (int): Row to start the count from
-            column (int): Column to start the count from
-            player (str): Player whose move is being evaluated
-            delta_row (int): Row direction
-            delta_column (int): Column direction
+            board (board): Current board state
+            row (int): Row number of the position from which to evaluate
+            column (int): Column number of the position from which to evaluate
+            player (str): Player who is under evaluation
+            delta_row (int): Determines the direction of the row to be evaluated
+            delta_column (int): Determines the direction of the column to be evaluated
+
+        Returns:
+            int, int: Score of the position based on consecutive pieces and number of open ends
         """
 
-        count = 0
+        line_length = 0
+        open_ends = 0
 
-        for _ in range(4):
-            row += delta_row
-            column += delta_column
+        for step in range(1, 5):
+            # Check up to 4 steps in a given direction
+            next_row = row + step * delta_row
+            next_column = column + step * delta_column
 
-            if (0 <= row < len(self.board.board) and
-                0 <= column < len(self.board.board) and
-                    self.board.board[row][column] == player):
-                count += 1
+            if 0 <= next_row < len(board.board) and 0 <= next_column < len(board.board[0]):
+                if board.board[next_row][next_column] == player:
+                    line_length += 1
+                elif board.board[next_row][next_column] == '-':  # Empty == open end
+                    open_ends += 1
+                    break
+                else:
+                    break
             else:
                 break
 
-        return count
+        return line_length, open_ends
 
     def get_possible_moves(self, board, all_moves_made):
-        """Returns a set of possible moves
+        """Returns a list of possible moves
 
         Args:
             board (board): Board to get possible moves from
-            all_moves_made (set()): Set/List to hold possible move set
+            all_moves_made (set()): List for all moves that have been made
 
         Returns:
-            set(): Set of possible moves
+            list[(int, int)]: List of possible moves
         """
 
-        if not all_moves_made:
-            start_point = (len(board.board) // 2)-1
-            return [(start_point, start_point)]
-
-        # Use sets for faster lookups O(1) for later usage
-        possible_moves = set()
+        possible_moves = []
 
         for move in all_moves_made:
             row, column = move
@@ -111,7 +130,7 @@ class AI():
                 for j in range(max(0, column - 2), min(len(board.board), column + 2)):
 
                     if board.board[i][j] == "-":
-                        possible_moves.add((i, j))
+                        possible_moves.append((i, j))
 
         return possible_moves
 
@@ -125,6 +144,12 @@ class AI():
             board (Board): Clone of the game board the AI uses during simulations
             alpha (int): The alpha cut-off for the alpha-beta pruning optimization
             beta (int): The beta cut-off for the alpha-beta pruning optimization
+            all_moves_made (list): List of all moves that have been made on the actual game board
+
+        Returns:
+            int, tuple(int, int): 
+            A evaluation score of the current board state
+            and best possible move for each situation
         """
 
         if depth == 0:
@@ -138,12 +163,15 @@ class AI():
 
             max_evaluation = float("-inf")
 
-            for move in self.get_possible_moves(board, all_moves_made):
+            # Reversed selection for optimized Alpha-Beta pruning
+            for move in reversed(self.get_possible_moves(board, all_moves_made)):
 
                 board.make_move(move[0], move[1], "X")
 
                 if self.logic.check_win(move[0], move[1], "X", board):
-                    made_evaluation = 100
+                    # Immadetially return if winning move is found
+                    board.undo_move()
+                    return float("inf"), move
                 else:
                     made_evaluation, _ = self.minimax(
                         depth-1, False, board, alpha, beta, all_moves_made)
@@ -164,12 +192,14 @@ class AI():
 
             min_evaluation = float("inf")
 
-            for move in self.get_possible_moves(board, all_moves_made):
+            # Reversed selection for optimized Alpha-Beta pruning
+            for move in reversed(self.get_possible_moves(board, all_moves_made)):
 
                 board.make_move(move[0], move[1], "0")
 
                 if self.logic.check_win(move[0], move[1], "0", board):
-                    made_evaluation = -100
+                    board.undo_move()
+                    return float("-inf"), move
                 else:
                     made_evaluation, _ = self.minimax(
                         depth-1, False, board, alpha, beta, all_moves_made)
