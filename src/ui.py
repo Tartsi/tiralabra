@@ -24,6 +24,7 @@ class UI:
 
         print("Starting the game! X moves first!")
         print("Give your squares as a row and column.\n")
+        print("The game is 1-indexed, first row is 1 and last row 20.\n")
         users_turn = False
 
         while True:
