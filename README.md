@@ -9,6 +9,8 @@
 
 - [Project definition](./documentation/definition.md)
 - [Testing document](./documentation/testing_report.md)
+- [Implementation document](./documentation/implementation.md)
+- [Instructions for usage](./documentation/instructions.md)
 
 ### Weekly reports:
 
