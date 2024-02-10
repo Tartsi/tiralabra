@@ -11,3 +11,5 @@ Wednesday 07.02.2024:
   - Started rewriting heuristic solutions (1h)
 Thursday 08.02.2024:
   - Rewrote algorithms related to heuristics + new tests (4h)
+Saturday 10.02.2024:
+  - Update documentation (1h)
