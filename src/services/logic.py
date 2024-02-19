@@ -25,11 +25,11 @@ class Logic:
             bool: True or False whether the move was successful or not
         """
         if row < 0 or row >= len(board.board):
-            print("Invalid row!")
+            print("Invalid row! Remember the game is 1-indexed.")
             return False
 
         if column < 0 or column >= len(board.board):
-            print("Invalid column!")
+            print("Invalid column! Remember the game is 1-indexed.")
             return False
 
         if board.board[row][column] == "-":

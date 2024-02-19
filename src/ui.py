@@ -22,8 +22,9 @@ class UI:
         """Starts the game
         """
 
-        print("Starting the game! X moves first!")
-        print("Give your squares as a row and column.\n")
+        print("\nStarting the game! AI (X) moves first!")
+        print("First to reach 5 pieces in a row on the board wins the game!\n")
+        print("Give your square as a number (row and column). They will be asked in order after 'Choice'.\n")
         print("The game is 1-indexed, first row is 1 and last row 20.\n")
         users_turn = False
 
@@ -57,8 +58,8 @@ class UI:
                         print("0 won!")
                         print("Game over! Thanks for playing.")
                         return
-                except Exception:
-                    print('Invalid input, try again!')
+                except Exception as e:
+                    print('Invalid input, try again!', e, "\n")
             else:
 
                 # AI always starts from the middle of the board
