@@ -8,11 +8,6 @@ class Logic:
     Handles the game logic i.e functionalities
     """
 
-    def __init__(self):
-        """Initializes the game logic
-        """
-        return
-
     def make_move(self, row, column, player, board):
         """Moves players piece on board if not occupied
 
