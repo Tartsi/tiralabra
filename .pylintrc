@@ -10,7 +10,8 @@ disable=raw-checker-failed,
         broad-exception-caught,
         too-few-public-methods,
         consider-using-enumerate,
-        no-else-return
+        no-else-return,
+        too-many-statements
 
 
 [FORMAT]
