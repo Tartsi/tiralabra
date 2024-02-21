@@ -16,7 +16,6 @@ class AI():
         """
         self.board = Board()
         self.logic = Logic()
-        self.made_moves = 0
 
     def evaluate_board(self, board):
         """Evaluates the current board state and returns a value of it

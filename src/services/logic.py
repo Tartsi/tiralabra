@@ -8,6 +8,9 @@ class Logic:
     Handles the game logic i.e functionalities
     """
 
+    def __init__(self):
+        self.made_moves = 0
+
     def make_move(self, row, column, player, board):
         """Moves players piece on board if not occupied
 
@@ -28,6 +31,7 @@ class Logic:
             return False
 
         if board.board[row][column] == "-":
+            self.made_moves += 1
             board.make_move(row, column, player)
             return True
 
@@ -135,3 +139,14 @@ class Logic:
             return True
 
         return False
+
+    def check_draw(self, board):
+        """Checks if the game has reached a draw point
+
+        Args:
+            board (board): Board to check draw from
+
+        Returns:
+            bool: True if draw has been reached, False otherwise
+        """
+        return bool(self.made_moves >= (len(board.board)**2))

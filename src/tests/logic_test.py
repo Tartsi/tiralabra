@@ -11,16 +11,20 @@ class TestBoard(unittest.TestCase):
 
     def test_make_legal_move(self):
         self.assertEqual(self.logic.make_move(1, 1, "0", self.board), True)
+        self.assertEqual(self.logic.made_moves, 1)
 
-    def test_make_illegal_move(self):
+    def test_make_duplicate_move(self):
         self.logic.make_move(1, 1, "0", self.board)
         self.assertFalse(self.logic.make_move(1, 1, "0", self.board))
+        self.assertEqual(self.logic.made_moves, 1)
 
     def test_make_move_out_of_bounds_row(self):
         self.assertFalse(self.logic.make_move(20, 1, "0", self.board))
+        self.assertEqual(self.logic.made_moves, 0)
 
     def test_make_move_out_of_bounds_column(self):
         self.assertFalse(self.logic.make_move(1, 20, "0", self.board))
+        self.assertEqual(self.logic.made_moves, 0)
 
     def test_check_horizontal_win(self):
         self.logic.make_move(0, 0, "X", self.board)
@@ -96,3 +100,19 @@ class TestBoard(unittest.TestCase):
         self.logic.make_move(2, 0, "X", self.board)
         self.logic.make_move(3, 0, "X", self.board)
         self.assertFalse(self.logic.check_win(0, 0, 'X', self.board))
+
+    def test_check_no_draw(self):
+        self.assertFalse(self.logic.check_draw(self.board))
+
+    def test_check_draw(self):
+        test_board = Board(3)
+        self.logic.make_move(0, 0, "X", test_board)
+        self.logic.make_move(0, 1, "0", test_board)
+        self.logic.make_move(0, 2, "X", test_board)
+        self.logic.make_move(1, 0, "0", test_board)
+        self.logic.make_move(1, 1, "X", test_board)
+        self.logic.make_move(1, 2, "0", test_board)
+        self.logic.make_move(2, 0, "X", test_board)
+        self.logic.make_move(2, 1, "0", test_board)
+        self.logic.make_move(2, 2, "X", test_board)
+        self.assertTrue(self.logic.check_draw(test_board))
