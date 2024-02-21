@@ -36,10 +36,3 @@ class Board:
             return True
 
         return False
-
-    def print_board(self):
-        """Prints the current state of the board"""
-
-        for row in self.board:
-            print(" ".join(row))
-        print()

@@ -39,27 +39,3 @@ class TestBoard(unittest.TestCase):
         self.board.make_move(1, 1, "0")
         self.assertTrue(self.board.undo_move())
         self.assertFalse(self.board.undo_move())
-
-    def test_board_print_empty(self):
-        sys.stdout = io.StringIO()
-        board = Board(3)
-        board.print_board()
-        expected = "- - -\n- - -\n- - -\n\n"
-        self.assertEqual(sys.stdout.getvalue(), expected)
-
-    def test_board_print_after_legal_move(self):
-        sys.stdout = io.StringIO()
-        board = Board(3)
-        board.make_move(1, 1, "0")
-        board.print_board()
-        expected = "- - -\n- 0 -\n- - -\n\n"
-        self.assertEqual(sys.stdout.getvalue(), expected)
-
-    def test_board_print_after_illegal_move(self):
-        sys.stdout = io.StringIO()
-        board = Board(3)
-        board.make_move(1, 1, "0")
-        board.make_move(1, 1, "0")
-        board.print_board()
-        expected = "- - -\n- 0 -\n- - -\n\n"
-        self.assertEqual(sys.stdout.getvalue(), expected)
