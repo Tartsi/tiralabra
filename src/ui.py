@@ -71,9 +71,17 @@ class UI:
                         users_turn = False
 
                     if self.logic.check_win(row_input, col_input, '0', self.board):
+                        self.display_board_numbers(self.board)
                         print("\n0 won!")
                         print("Game over! Thanks for playing.")
                         return
+
+                    if self.logic.check_draw(self.board):
+                        self.display_board_numbers(self.board)
+                        print("Game ended in a draw!")
+                        print("Thanks for playing!")
+                        return
+
                 except Exception as e:
                     print('Invalid input, try again!', e, "\n")
             else:
@@ -81,7 +89,8 @@ class UI:
                 # AI always starts from the middle of the board
                 if not self.all_moves_made:
                     start_point = (len(self.board.board) // 2)-1
-                    self.board.make_move(start_point, start_point, 'X')
+                    self.logic.make_move(
+                        start_point, start_point, 'X', self.board)
                     self.all_moves_made.add((start_point, start_point))
                     print(
                         f"\nAI moved to square ({start_point+1}, {start_point+1})\n")
@@ -104,6 +113,12 @@ class UI:
                     self.display_board_numbers(self.board)
                     print("\nX won!")
                     print("Game over! Thanks for playing.")
+                    return
+
+                if self.logic.check_draw(self.board):
+                    self.display_board_numbers(self.board)
+                    print("\nGame ended in a draw!")
+                    print("Thanks for playing!")
                     return
 
                 self.display_board_numbers(self.board)
