@@ -197,8 +197,9 @@ class AI():
                 board.make_move(move[0], move[1], "0")
 
                 if self.logic.check_win(move[0], move[1], "0", board):
+                    # Inevitable loss, AI forfeits
                     board.undo_move()
-                    return float("-inf"), move
+                    return float("-inf"), None
                 else:
                     made_evaluation, _ = self.minimax(
                         depth-1, False, board, alpha, beta, all_moves_made)

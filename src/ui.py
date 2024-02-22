@@ -38,24 +38,24 @@ class UI:
         """Starts the game
         """
 
-        print("\n- Starting the game! AI (X) moves first!\n")
+        print("\nWelcome to my Gomoku game!\n")
         print("- First to reach 5 pieces in a row on the board wins the game!\n")
         print("- Give your squares in order as a number after 'Choice' (row and column).\n")
         print("- The game is 1-indexed, first row is 1 and last row 20.\n")
+        print("- AI (X) moves first!\n")
         users_turn = False
+
+        print("\nPress anything to start playing, 0 to exit game.")
+        decision = input("Choice: ")
+
+        if decision == '0':
+            return
 
         while True:
 
             if users_turn:
 
-                print("\nPress anything to enter square, 0 to exit game.")
-
                 try:
-
-                    decision = input("Choice: ")
-
-                    if decision == '0':
-                        return
 
                     print()
                     row_input = int(
@@ -100,8 +100,16 @@ class UI:
 
                 cloned_board = deepcopy(self.board)
 
-                row, column = self.ai.minimax(
+                result = self.ai.minimax(
                     2, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
+
+                # AI forfeit
+                if result is None:
+                    print("\nX has no moves left, 0 wins!")
+                    print("Game over! Thanks for playing.")
+                    return
+
+                row, column = result
 
                 self.logic.make_move(row, column, "X", self.board)
 
