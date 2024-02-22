@@ -19,9 +19,9 @@
 
 - AI consistently looks for a win, and builds good lines agressively. It also blocks the player effectively.
 
-- TODO: AI will take a 4:th line in a direction, even if the player has blocked both sides, such as that it is impossible to build a 5-straight.
+- TODO: AI will take a 4:th line in a direction, even if the player has blocked both sides, such as that it is impossible to build a 5-straight line.
 
-- TODO: Minimax-algorithm will return None and crash the application in situation where the AI-does not have a move left (i.e player is certain to win).
+- ~~TODO: Minimax-algorithm will return None and crash the application in situation where the AI-does not have a move left (i.e player is certain to win)~~. Fixed as of 22.02.2024. AI now forfeits when it has no moves left.
 
 ### Other testing
 
