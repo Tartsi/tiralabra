@@ -24,7 +24,7 @@
 
 - The state of the game as of 10.02.2024 is as follows:
     - The AI can play extremely well, however some problems still exist which I already have identified and am working on fixing.
-    - Draw situation is not implemented yet (this is a complete oversight by me unfortunately).
+    - Draw situation is not implemented yet (this is a complete oversight by me unfortunately). Fixed as of 21.02.2024.
 
 - Other improvement suggestions will be added at the end of the project.
 
