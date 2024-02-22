@@ -10,3 +10,4 @@
     - Add draw to the game. (2h)
 - Thursday 22.02.2024:
     - Add AI forfeit on 100% loss situations (No moves left). (30 minutes)
+    - Add more extensive minimax-testing. (2h)
