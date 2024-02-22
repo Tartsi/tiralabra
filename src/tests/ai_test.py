@@ -48,6 +48,72 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(result_move, (float("inf"), (13, 13)))
 
+    def test_minimax_build_2_line(self):
+        self.board.make_move(10, 10, "X")
+        self.board.make_move(9, 10, "0")
+
+        all_moves_made = ((10, 10), (9, 10))
+
+        result_move = self.ai.minimax(
+            2, True, self.board,
+            float("-inf"), float("inf"), all_moves_made
+        )
+
+        self.assertEqual(result_move, (0, (10, 11)))
+
+    def test_minimax_build_3_line(self):
+        self.board.make_move(10, 10, "X")
+        self.board.make_move(9, 10, "0")
+        self.board.make_move(10, 11, "X")
+        self.board.make_move(8, 10, "0")
+
+        all_moves_made = ((10, 10), (9, 10), (10, 11), (8, 10))
+
+        result_move = self.ai.minimax(
+            2, True, self.board,
+            float("-inf"), float("inf"), all_moves_made
+        )
+
+        self.assertEqual(result_move, (0, (10, 12)))
+
+    def test_minimax_build_4_line(self):
+        self.board.make_move(10, 10, "X")
+        self.board.make_move(9, 10, "0")
+        self.board.make_move(10, 11, "X")
+        self.board.make_move(8, 10, "0")
+        self.board.make_move(10, 12, "X")
+        self.board.make_move(7, 10, "0")
+
+        all_moves_made = ((10, 10), (9, 10), (10, 11),
+                          (8, 10), (10, 12), (7, 10))
+
+        result_move = self.ai.minimax(
+            2, True, self.board,
+            float("-inf"), float("inf"), all_moves_made
+        )
+
+        self.assertEqual(result_move, (20, (10, 13)))
+
+    def test_minimax_return_none_on_guaranteed_loss(self):
+        self.board.make_move(13, 10, "X")
+        self.board.make_move(9, 10, "0")
+        self.board.make_move(10, 11, "X")
+        self.board.make_move(8, 10, "0")
+        self.board.make_move(10, 12, "X")
+        self.board.make_move(7, 10, "0")
+        self.board.make_move(1, 1, "X")
+        self.board.make_move(6, 10, "0")
+
+        all_moves_made = ((13, 10), (9, 10), (10, 11),
+                          (8, 10), (10, 12), (7, 10), (1, 1), (6, 10))
+
+        result_move = self.ai.minimax(
+            2, True, self.board,
+            float("-inf"), float("inf"), all_moves_made
+        )
+
+        self.assertEqual(result_move, (float("-inf"), None))
+
     def test_evaluate_empty_board(self):
         self.assertEqual(self.ai.evaluate_board(self.board), 0)
 
