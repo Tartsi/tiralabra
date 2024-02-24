@@ -22,8 +22,10 @@
 
 ### Current State and Improvement suggestions
 
-- The state of the game as of 10.02.2024 is as follows:
-    - The AI can play extremely well, however some problems still exist which I already have identified and am working on fixing.
+- The state of the game as of 24.02.2024 is as follows:
+    - The AI can play extremely well, however some problems still exist which I already have identified and am working on fixing:
+    TODO: Fix AI 'giving up' - make it return the best possible move regardless of game state.
+    TODO: Fix AI playing itself into a 'trap'. At the moment it plays a 4-line even if both sides are blocked, and 5-line is impossible to achieve.
     - ~~Draw situation is not implemented yet (this is a complete oversight by me unfortunately)~~. Fixed as of 21.02.2024.
 
 - Other improvement suggestions will be added at the end of the project.
