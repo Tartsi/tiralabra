@@ -35,7 +35,7 @@ class UI:
                     continue
 
                 if self.board.board[row][col] == "-" and \
-                        self.board.board[row][col] not in self.possible_moves:
+                        (row, col) not in self.possible_moves:
                     self.possible_moves.append((row, col))
 
         if latest_move in self.possible_moves:

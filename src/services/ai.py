@@ -108,32 +108,35 @@ class AI():
 
         return line_length, open_ends
 
-    def get_possible_moves(self, board, all_moves_made):
-        """Returns a list of possible moves
+    def update_possible_moves_for_simulation(self, latest_move, cloned_possible_moves, board):
+        """Updates a cloned list of possible moves based on the latest simulated move in minimax
 
         Args:
-            board (board): Board to get possible moves from
-            all_moves_made (set()): List for all moves that have been made
-
-        Returns:
-            list[(int, int)]: List of possible moves
+            latest_move (tuple(int, int)): Row and column of the latest move made in the simulation
+            cloned_possible_moves (list[tuple(int, int)]): Cloned list of possible moves
+            board (Board): Current state of the board in the simulation
         """
 
-        possible_moves = []
+        if latest_move in cloned_possible_moves:
+            cloned_possible_moves.remove(latest_move)
 
-        for move in all_moves_made:
-            row, column = move
+        rows = range(
+            max(0, latest_move[0] - 2), min(len(board.board), latest_move[0] + 3))
+        cols = range(
+            max(0, latest_move[1] - 2), min(len(board.board[0]), latest_move[1] + 3))
 
-            for i in range(max(0, row - 2), min(len(board.board), row + 2)):
+        for row in rows:
 
-                for j in range(max(0, column - 2), min(len(board.board), column + 2)):
+            for col in cols:
 
-                    if board.board[i][j] == "-":
-                        possible_moves.append((i, j))
+                if board.board[row][col] == "X" or board.board[row][col] == "0":
+                    continue
 
-        return possible_moves
+                if board.board[row][col] == "-" and \
+                        (row, col) not in cloned_possible_moves:
+                    cloned_possible_moves.append((row, col))
 
-    def minimax(self, depth, maximizing, board, alpha, beta, all_moves_made):
+    def minimax(self, depth, maximizing, board, alpha, beta, possible_moves):
         """Minimax-algorithm used for decision making
 
         Args:
@@ -163,17 +166,22 @@ class AI():
             max_evaluation = float("-inf")
 
             # Reversed selection for optimized Alpha-Beta pruning
-            for move in reversed(self.get_possible_moves(board, all_moves_made)):
+            for move in reversed(possible_moves):
+
+                cloned_possible_moves = possible_moves.copy()
 
                 board.make_move(move[0], move[1], "X")
+
+                self.update_possible_moves_for_simulation(
+                    move, cloned_possible_moves, board)
 
                 if self.logic.check_win(move[0], move[1], "X", board):
                     # Immadetially return if winning move is found
                     board.undo_move()
                     return float("inf"), move
-                else:
-                    made_evaluation, _ = self.minimax(
-                        depth-1, False, board, alpha, beta, all_moves_made)
+
+                made_evaluation, _ = self.minimax(
+                    depth-1, False, board, alpha, beta, cloned_possible_moves)
 
                 board.undo_move()
 
@@ -191,8 +199,9 @@ class AI():
 
             min_evaluation = float("inf")
 
-            # Reversed selection for optimized Alpha-Beta pruning
-            for move in reversed(self.get_possible_moves(board, all_moves_made)):
+            for move in reversed(possible_moves):
+
+                cloned_possible_moves = possible_moves.copy()
 
                 board.make_move(move[0], move[1], "0")
 
@@ -200,9 +209,9 @@ class AI():
                     # Inevitable loss, AI forfeits
                     board.undo_move()
                     return float("-inf"), None
-                else:
-                    made_evaluation, _ = self.minimax(
-                        depth-1, False, board, alpha, beta, all_moves_made)
+
+                made_evaluation, _ = self.minimax(
+                    depth-1, True, board, alpha, beta, cloned_possible_moves)
 
                 board.undo_move()
 
