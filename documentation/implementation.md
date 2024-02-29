@@ -14,7 +14,8 @@
 
 - Python lists are used to create the 2D-array representation of the board, and to store information regarding made and potential moves for the AI.
 - If iterative deepening is to be implemented, Python dictionaries will also be utilized for generating best possible move for each situation.
-- More information will be provided as the project advances
+
+- Rest of the information will be available at the end of the project.
 
 ### Achieved Time and Space Complexity
 
@@ -22,10 +23,11 @@
 
 ### Current State and Improvement suggestions
 
-- The state of the game as of 24.02.2024 is as follows:
+- The state of the game as of 29.02.2024 is as follows:
     - The AI can play extremely well, however some problems still exist which I already have identified and am working on fixing:
     TODO: Fix AI 'giving up' - make it return the best possible move regardless of game state.
     TODO: Fix AI playing itself into a 'trap'. At the moment it plays a 4-line even if both sides are blocked, and 5-line is impossible to achieve.
+    - Might not be able to complete either of these during final week due to unforeseen problems related to dynamic listing.
     - ~~Draw situation is not implemented yet (this is a complete oversight by me unfortunately)~~. Fixed as of 21.02.2024.
 
 - Other improvement suggestions will be added at the end of the project.
