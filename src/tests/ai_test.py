@@ -95,7 +95,28 @@ class TestBoard(unittest.TestCase):
             float("-inf"), float("inf"), self.ui.possible_moves
         )
 
-        self.assertEqual(result_move, (20, (10, 13)))
+        self.assertEqual(result_move, (0, (10, 13)))
+
+    def test_minimax_wont_build_into_no_open_ends(self):
+        self.board.make_move(10, 10, "X")
+        self.ui.update_possible_moves((10, 10))
+        self.board.make_move(11, 11, "0")
+        self.ui.update_possible_moves((11, 11))
+        self.board.make_move(11, 10, "X")
+        self.ui.update_possible_moves((11, 10))
+        self.board.make_move(12, 10, "0")
+        self.ui.update_possible_moves((12, 10))
+        self.board.make_move(9, 10, "X")
+        self.ui.update_possible_moves((9, 10))
+        self.board.make_move(7, 10, "0")
+        self.ui.update_possible_moves((7, 10))
+
+        result_move = self.ai.minimax(
+            2, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
+
+        self.assertNotEqual(result_move[1], (8, 10))
 
     def test_minimax_return_none_on_guaranteed_loss(self):
         self.board.make_move(13, 10, "X")

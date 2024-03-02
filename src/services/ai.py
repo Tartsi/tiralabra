@@ -61,7 +61,9 @@ class AI():
             line_score, open_ends = self.evaluate_line(
                 board, row, column, player, delta_row, delta_column)
 
-            if line_score == 3:
+            if line_score == 3 and open_ends == 0:
+                pos_score += 0
+            elif line_score == 3:
                 pos_score += 50 if open_ends > 0 else 30
             elif line_score == 2:
                 pos_score += 10 if open_ends == 2 else 5
@@ -206,9 +208,9 @@ class AI():
                 board.make_move(move[0], move[1], "0")
 
                 if self.logic.check_win(move[0], move[1], "0", board):
-                    # Inevitable loss, AI forfeits
+                    # Inevitable loss
                     board.undo_move()
-                    return float("-inf"), None
+                    return float("-inf"), best_move
 
                 made_evaluation, _ = self.minimax(
                     depth-1, True, board, alpha, beta, cloned_possible_moves)
