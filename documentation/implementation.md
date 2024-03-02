@@ -32,7 +32,13 @@
     - TODO: ~~Fix AI playing itself into a 'trap'. At the moment it plays a 4-line even if both sides are blocked, and 5-line is impossible to achieve~~. Fixed as of 02.03.2024
 
     - TODO: ~~Draw situation is not implemented yet (this is a complete oversight by me unfortunately)~~. Fixed as of 21.02.2024.
-
+ 
+- Improvement suggestions:
+  - Add tasks
+  - Add both sides as playable (AI is always X at the moment)
+  - Fix AI giving up
+  - Add option to replay directly from command line
+  
 ### Used sources
 
 - (https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)
