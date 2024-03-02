@@ -13,7 +13,33 @@ class UI:
         self.board = board
         self.logic = logic
         self.ai = ai
-        self.all_moves_made = set()
+        self.possible_moves = []
+
+    def update_possible_moves(self, latest_move):
+        """Used to dynamically update possible moves on the game board
+
+        Args:
+            latest_move (tuple(int, int)): Latest move made on the board
+        """
+
+        rows = range(
+            max(0, latest_move[0] - 2), min(len(self.board.board), latest_move[0] + 3))
+        cols = range(
+            max(0, latest_move[1] - 2), min(len(self.board.board[0]), latest_move[1] + 3))
+
+        for row in rows:
+
+            for col in cols:
+
+                if self.board.board[row][col] == "X" or self.board.board[row][col] == "0":
+                    continue
+
+                if self.board.board[row][col] == "-" and \
+                        (row, col) not in self.possible_moves:
+                    self.possible_moves.append((row, col))
+
+        if latest_move in self.possible_moves:
+            self.possible_moves.remove(latest_move)
 
     def display_board_numbers(self, board):
         """Generates row and column numbers for the board
@@ -66,7 +92,7 @@ class UI:
                     if self.logic.make_move(row_input, col_input, '0', self.board):
                         print(
                             f"Moved to square ({row_input+1} and {col_input+1})\n")
-                        self.all_moves_made.add((row_input, col_input))
+                        self.update_possible_moves((row_input, col_input))
                         self.display_board_numbers(self.board)
                         users_turn = False
 
@@ -87,11 +113,11 @@ class UI:
             else:
 
                 # AI always starts from the middle of the board
-                if not self.all_moves_made:
+                if not self.possible_moves:
                     start_point = (len(self.board.board) // 2)-1
                     self.logic.make_move(
                         start_point, start_point, 'X', self.board)
-                    self.all_moves_made.add((start_point, start_point))
+                    self.update_possible_moves((start_point, start_point))
                     print(
                         f"\nAI moved to square ({start_point+1}, {start_point+1})\n")
                     self.display_board_numbers(self.board)
@@ -101,7 +127,7 @@ class UI:
                 cloned_board = deepcopy(self.board)
 
                 result = self.ai.minimax(
-                    2, True, cloned_board, float("-inf"), float("inf"), self.all_moves_made)[1]
+                    2, True, cloned_board, float("-inf"), float("inf"), self.possible_moves)[1]
 
                 # AI forfeit
                 if result is None:
@@ -115,7 +141,7 @@ class UI:
 
                 print(f"\nAI moved to square ({row+1}, {column+1})\n")
 
-                self.all_moves_made.add((row, column))
+                self.update_possible_moves((row, column))
 
                 if self.logic.check_win(row, column, 'X', self.board):
                     self.display_board_numbers(self.board)
