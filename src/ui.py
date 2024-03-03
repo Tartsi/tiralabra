@@ -34,9 +34,19 @@ class UI:
                 if self.board.board[row][col] == "X" or self.board.board[row][col] == "0":
                     continue
 
-                if self.board.board[row][col] == "-" and \
-                        (row, col) not in self.possible_moves:
-                    self.possible_moves.append((row, col))
+                if self.board.board[row][col] == "-":
+
+                    current_move = (row, col)
+
+                    close = abs(
+                        row - latest_move[0]) <= 1 and abs(col - latest_move[1]) <= 1
+
+                    if current_move not in self.possible_moves:
+
+                        if close:
+                            self.possible_moves.append(current_move)
+                        else:
+                            self.possible_moves.insert(0, current_move)
 
         if latest_move in self.possible_moves:
             self.possible_moves.remove(latest_move)
@@ -127,13 +137,7 @@ class UI:
                 cloned_board = deepcopy(self.board)
 
                 result = self.ai.minimax(
-                    2, True, cloned_board, float("-inf"), float("inf"), self.possible_moves)[1]
-
-                # AI forfeit
-                if result is None:
-                    print("\nX has no moves left, 0 wins!")
-                    print("Game over! Thanks for playing.")
-                    return
+                    4, True, cloned_board, float("-inf"), float("inf"), self.possible_moves)[1]
 
                 row, column = result
 

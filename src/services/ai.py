@@ -119,9 +119,6 @@ class AI():
             board (Board): Current state of the board in the simulation
         """
 
-        if latest_move in cloned_possible_moves:
-            cloned_possible_moves.remove(latest_move)
-
         rows = range(
             max(0, latest_move[0] - 2), min(len(board.board), latest_move[0] + 3))
         cols = range(
@@ -134,9 +131,22 @@ class AI():
                 if board.board[row][col] == "X" or board.board[row][col] == "0":
                     continue
 
-                if board.board[row][col] == "-" and \
-                        (row, col) not in cloned_possible_moves:
-                    cloned_possible_moves.append((row, col))
+                if board.board[row][col] == "-":
+
+                    current_move = (row, col)
+
+                    close = abs(
+                        row - latest_move[0]) <= 1 and abs(col - latest_move[1]) <= 1
+
+                    if current_move not in cloned_possible_moves:
+
+                        if close:
+                            cloned_possible_moves.append(current_move)
+                        else:
+                            cloned_possible_moves.insert(0, current_move)
+
+        if latest_move in cloned_possible_moves:
+            cloned_possible_moves.remove(latest_move)
 
     def minimax(self, depth, maximizing, board, alpha, beta, possible_moves):
         """Minimax-algorithm used for decision making
@@ -148,7 +158,7 @@ class AI():
             board (Board): Clone of the game board the AI uses during simulations
             alpha (int): The alpha cut-off for the alpha-beta pruning optimization
             beta (int): The beta cut-off for the alpha-beta pruning optimization
-            all_moves_made (list): List of all moves that have been made on the actual game board
+            possible_moves (list[tuple(int, int)]): List of all moves that can be made on the board
 
         Returns:
             int, tuple(int, int): 
@@ -162,13 +172,15 @@ class AI():
 
         best_move = None
 
-        # Hard code AI to X for now
+        # Hard code AI to X
         if maximizing:
 
             max_evaluation = float("-inf")
 
             # Reversed selection for optimized Alpha-Beta pruning
-            for move in reversed(possible_moves):
+            for i in range(len(possible_moves) - 1, -1, -1):
+
+                move = possible_moves[i]
 
                 cloned_possible_moves = possible_moves.copy()
 
@@ -180,7 +192,7 @@ class AI():
                 if self.logic.check_win(move[0], move[1], "X", board):
                     # Immadetially return if winning move is found
                     board.undo_move()
-                    return float("inf"), move
+                    return 100000, move
 
                 made_evaluation, _ = self.minimax(
                     depth-1, False, board, alpha, beta, cloned_possible_moves)
@@ -201,7 +213,9 @@ class AI():
 
             min_evaluation = float("inf")
 
-            for move in reversed(possible_moves):
+            for i in range(len(possible_moves) - 1, -1, -1):
+
+                move = possible_moves[i]
 
                 cloned_possible_moves = possible_moves.copy()
 
@@ -210,7 +224,7 @@ class AI():
                 if self.logic.check_win(move[0], move[1], "0", board):
                     # Inevitable loss
                     board.undo_move()
-                    return float("-inf"), best_move
+                    return -100000, best_move
 
                 made_evaluation, _ = self.minimax(
                     depth-1, True, board, alpha, beta, cloned_possible_moves)
