@@ -137,7 +137,8 @@ class AI():
 
                     if current_move in cloned_possible_moves:
                         self.cloned_possible_moves.remove(current_move)
-                        self.cloned_possible_moves.append(current_move)
+
+                    self.cloned_possible_moves.append(current_move)
 
         if latest_move in cloned_possible_moves:
             cloned_possible_moves.remove(latest_move)
