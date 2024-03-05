@@ -135,15 +135,9 @@ class AI():
 
                     current_move = (row, col)
 
-                    close = abs(
-                        row - latest_move[0]) <= 1 and abs(col - latest_move[1]) <= 1
-
-                    if current_move not in cloned_possible_moves:
-
-                        if close:
-                            cloned_possible_moves.append(current_move)
-                        else:
-                            cloned_possible_moves.insert(0, current_move)
+                    if current_move in cloned_possible_moves:
+                        self.cloned_possible_moves.remove(current_move)
+                        self.cloned_possible_moves.append(current_move)
 
         if latest_move in cloned_possible_moves:
             cloned_possible_moves.remove(latest_move)

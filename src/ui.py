@@ -38,15 +38,9 @@ class UI:
 
                     current_move = (row, col)
 
-                    close = abs(
-                        row - latest_move[0]) <= 1 and abs(col - latest_move[1]) <= 1
-
-                    if current_move not in self.possible_moves:
-
-                        if close:
-                            self.possible_moves.append(current_move)
-                        else:
-                            self.possible_moves.insert(0, current_move)
+                    if current_move in self.possible_moves:
+                        self.possible_moves.remove(current_move)
+                        self.possible_moves.append(current_move)
 
         if latest_move in self.possible_moves:
             self.possible_moves.remove(latest_move)
