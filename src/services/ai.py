@@ -136,9 +136,9 @@ class AI():
                     current_move = (row, col)
 
                     if current_move in cloned_possible_moves:
-                        self.cloned_possible_moves.remove(current_move)
+                        cloned_possible_moves.remove(current_move)
 
-                    self.cloned_possible_moves.append(current_move)
+                    cloned_possible_moves.append(current_move)
 
         if latest_move in cloned_possible_moves:
             cloned_possible_moves.remove(latest_move)
@@ -197,8 +197,7 @@ class AI():
                 if made_evaluation > max_evaluation:
                     max_evaluation = made_evaluation
                     best_move = move
-
-                alpha = max(alpha, made_evaluation)
+                    alpha = max(alpha, made_evaluation)
 
                 if beta <= alpha:
                     break
