@@ -15,3 +15,5 @@
 - I was able to fix the problems within the code with the help of course instructor Hannu Kärnä. It eventually turned out that my minimax was not 'mirrored' and was missing the update_possible_moves - function in the minimizer. This was causing the AI to make weird, incoherent decisions.
 
 - Ultimately I am happy how the project turned out. Biggest regret is that I did not start coding both players as playable in the beginning, and this is the first priority which I would fix.
+
+- Finished the project on Friday 08.03.2024.

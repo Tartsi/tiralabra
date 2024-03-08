@@ -12,6 +12,18 @@ Install Poetry dependencies
 poetry install
 ```
 
+Enter poetry shell
+
+```bash
+poetry shell
+```
+
+If you want you can run tests (Takes up to 15 minutes!)
+
+```bash
+pytest src
+```
+
 ### Usage
 
 The game is played entirely in the terminal
