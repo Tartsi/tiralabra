@@ -131,14 +131,13 @@ class UI:
 
                 cloned_board = deepcopy(self.board)
 
-                result = self.ai.minimax(
+                row, column = self.ai.minimax(
                     4, True, cloned_board, float("-inf"), float("inf"), self.possible_moves)[1]
-
-                row, column = result
 
                 self.logic.make_move(row, column, "X", self.board)
 
-                print(f"\nAI moved to square ({row+1}, {column+1})\n")
+                print(
+                    f"\nAI moved to square ({row+1}, {column+1})\n")
 
                 self.update_possible_moves((row, column))
 

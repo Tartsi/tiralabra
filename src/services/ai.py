@@ -207,6 +207,7 @@ class AI():
 
             min_evaluation = float("inf")
 
+            # Reversed selection for optimized Alpha-Beta pruning
             for i in range(len(possible_moves) - 1, -1, -1):
 
                 move = possible_moves[i]
@@ -215,10 +216,13 @@ class AI():
 
                 board.make_move(move[0], move[1], "0")
 
+                self.update_possible_moves_for_simulation(
+                    move, cloned_possible_moves, board)
+
                 if self.logic.check_win(move[0], move[1], "0", board):
                     # Inevitable loss
                     board.undo_move()
-                    return -100000, best_move
+                    return -100000, move
 
                 made_evaluation, _ = self.minimax(
                     depth-1, True, board, alpha, beta, cloned_possible_moves)
