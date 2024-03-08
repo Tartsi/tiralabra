@@ -22,3 +22,7 @@
 - [Week 6](./documentation/weekly_reports/report_week6.md)
 - [Week 7](./documentation/weekly_reports/report_week7.md)
 - [Final report](./documentation/weekly_reports/final_report.md)
+
+### Release:
+
+- [Release](https://github.com/Tartsi/tiralabra/releases/tag/v1.1.0)
