@@ -25,4 +25,4 @@
 
 ### Release:
 
-- [Release](https://github.com/Tartsi/tiralabra/releases/tag/v1.1.0)
+- [Release](https://github.com/Tartsi/tiralabra/releases/tag/v1.2.0)
