@@ -41,7 +41,7 @@ class UI:
                     if current_move in self.possible_moves:
                         self.possible_moves.remove(current_move)
 
-                    self.possible_moves.append(current_move)
+                self.possible_moves.append(current_move)
 
         if latest_move in self.possible_moves:
             self.possible_moves.remove(latest_move)

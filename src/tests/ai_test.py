@@ -21,32 +21,32 @@ class TestBoard(unittest.TestCase):
             (10, 10), clone, self.board)
 
         expected_moves = [
-            (12, 12), (12, 11), (12, 10), (12, 9), (12, 8),
-            (11, 12), (11, 8), (10, 12), (10, 8), (9, 12),
-            (9, 8), (8, 12), (8, 11), (8, 10), (8, 9),
-            (8, 8), (9, 9), (9, 10), (9, 11), (10, 9),
-            (10, 11), (11, 9), (11, 10), (11, 11)
+            (8, 8), (8, 9), (8, 10), (8, 11), (8, 12),
+            (9, 8), (9, 9), (9, 10), (9, 11), (9, 12),
+            (10, 8), (10, 9), (10, 11), (10, 12),
+            (11, 8), (11, 9), (11, 10), (11, 11), (11, 12),
+            (12, 8), (12, 9), (12, 10), (12, 11), (12, 12)
         ]
 
         self.assertEqual(expected_moves, clone)
 
-    # def test_minimax_take_winning_move(self):
+    def test_minimax_take_winning_move(self):
 
-    #     self.board.make_move(9, 9, "X")
-    #     self.ui.update_possible_moves((9, 9))
-    #     self.board.make_move(10, 10, "X")
-    #     self.ui.update_possible_moves((10, 10))
-    #     self.board.make_move(11, 11, "X")
-    #     self.ui.update_possible_moves((11, 11))
-    #     self.board.make_move(12, 12, "X")
-    #     self.ui.update_possible_moves((12, 12))
+        self.board.make_move(9, 9, "X")
+        self.ui.update_possible_moves((9, 9))
+        self.board.make_move(10, 10, "X")
+        self.ui.update_possible_moves((10, 10))
+        self.board.make_move(11, 11, "X")
+        self.ui.update_possible_moves((11, 11))
+        self.board.make_move(12, 12, "X")
+        self.ui.update_possible_moves((12, 12))
 
-    #     result_move = self.ai.minimax(
-    #         4, True, self.board,
-    #         float("-inf"), float("inf"), self.ui.possible_moves
-    #     )
+        result_move = self.ai.minimax(
+            4, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
 
-    #     self.assertEqual(result_move, (100000, (13, 13)))
+        self.assertEqual(result_move, (100000, (13, 13)))
 
     def test_minimax_build_2_line(self):
         self.board.make_move(10, 10, "X")
@@ -61,43 +61,43 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(result_move, (0, (11, 11)))
 
-    # def test_minimax_build_3_line(self):
-    #     self.board.make_move(10, 10, "X")
-    #     self.ui.update_possible_moves((10, 10))
-    #     self.board.make_move(9, 10, "0")
-    #     self.ui.update_possible_moves((9, 10))
-    #     self.board.make_move(10, 11, "X")
-    #     self.ui.update_possible_moves((10, 11))
-    #     self.board.make_move(8, 10, "0")
-    #     self.ui.update_possible_moves((8, 10))
+    def test_minimax_build_3_line(self):
+        self.board.make_move(10, 10, "X")
+        self.ui.update_possible_moves((10, 10))
+        self.board.make_move(9, 10, "0")
+        self.ui.update_possible_moves((9, 10))
+        self.board.make_move(10, 11, "X")
+        self.ui.update_possible_moves((10, 11))
+        self.board.make_move(8, 10, "0")
+        self.ui.update_possible_moves((8, 10))
 
-    #     result_move = self.ai.minimax(
-    #         4, True, self.board,
-    #         float("-inf"), float("inf"), self.ui.possible_moves
-    #     )
+        result_move = self.ai.minimax(
+            4, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
 
-    #     self.assertEqual(result_move, (0, (10, 12)))
+        self.assertEqual(result_move, (0, (10, 12)))
 
-    # def test_minimax_build_4_line(self):
-    #     self.board.make_move(10, 10, "X")
-    #     self.ui.update_possible_moves((10, 10))
-    #     self.board.make_move(9, 10, "0")
-    #     self.ui.update_possible_moves((9, 10))
-    #     self.board.make_move(10, 11, "X")
-    #     self.ui.update_possible_moves((10, 11))
-    #     self.board.make_move(8, 10, "0")
-    #     self.ui.update_possible_moves((8, 10))
-    #     self.board.make_move(10, 12, "X")
-    #     self.ui.update_possible_moves((10, 12))
-    #     self.board.make_move(7, 10, "0")
-    #     self.ui.update_possible_moves((7, 10))
+    def test_minimax_build_4_line_into_guaranteed_win(self):
+        self.board.make_move(10, 10, "X")
+        self.ui.update_possible_moves((10, 10))
+        self.board.make_move(9, 10, "0")
+        self.ui.update_possible_moves((9, 10))
+        self.board.make_move(10, 11, "X")
+        self.ui.update_possible_moves((10, 11))
+        self.board.make_move(8, 10, "0")
+        self.ui.update_possible_moves((8, 10))
+        self.board.make_move(10, 12, "X")
+        self.ui.update_possible_moves((10, 12))
+        self.board.make_move(7, 10, "0")
+        self.ui.update_possible_moves((7, 10))
 
-    #     result_move = self.ai.minimax(
-    #         4, True, self.board,
-    #         float("-inf"), float("inf"), self.ui.possible_moves
-    #     )
+        result_move = self.ai.minimax(
+            4, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
 
-    #     self.assertEqual(result_move, (0, (10, 13)))
+        self.assertEqual(result_move, (100000, (10, 13)))
 
     def test_minimax_wont_build_into_no_open_ends(self):
         self.board.make_move(10, 10, "X")
@@ -120,7 +120,7 @@ class TestBoard(unittest.TestCase):
 
         self.assertNotEqual(result_move[1], (8, 10))
 
-    def test_minimax_return_none_on_guaranteed_loss(self):
+    def test_minimax_return_move_on_guaranteed_loss(self):
         self.board.make_move(13, 10, "X")
         self.ui.update_possible_moves((13, 10))
         self.board.make_move(9, 10, "0")
@@ -143,7 +143,77 @@ class TestBoard(unittest.TestCase):
             float("-inf"), float("inf"), self.ui.possible_moves
         )
 
-        self.assertEqual(result_move, (0, (2, 1)))
+        self.assertEqual(result_move, (-100000, (8, 12)))
+
+    def test_minimax_find_winning_move_multiple_moves_ahead(self):
+        self.board.make_move(10, 7, "X")
+        self.ui.update_possible_moves((10, 7))
+        self.board.make_move(10, 6, "0")
+        self.ui.update_possible_moves((10, 6))
+        self.board.make_move(10, 8, "X")
+        self.ui.update_possible_moves((10, 8))
+        self.board.make_move(12, 6, "0")
+        self.ui.update_possible_moves((12, 6))
+        self.board.make_move(10, 9, "X")
+        self.ui.update_possible_moves((10, 9))
+        self.board.make_move(12, 7, "0")
+        self.ui.update_possible_moves((12, 7))
+        self.board.make_move(11, 10, "X")
+        self.ui.update_possible_moves((11, 10))
+        self.board.make_move(12, 8, "0")
+        self.ui.update_possible_moves((12, 8))
+        self.board.make_move(12, 10, "X")
+        self.ui.update_possible_moves((12, 10))
+        self.board.make_move(13, 6, "0")
+        self.ui.update_possible_moves((13, 6))
+        self.board.make_move(13, 10, "X")
+        self.ui.update_possible_moves((13, 10))
+        self.board.make_move(14, 10, "0")
+        self.ui.update_possible_moves((14, 10))
+
+        result_move = self.ai.minimax(
+            4, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
+
+        self.assertEqual(result_move, (100000, (10, 10)))
+
+    def test_minimax_find_takes_winning_move(self):
+        self.board.make_move(10, 7, "X")
+        self.ui.update_possible_moves((10, 7))
+        self.board.make_move(10, 6, "0")
+        self.ui.update_possible_moves((10, 6))
+        self.board.make_move(10, 8, "X")
+        self.ui.update_possible_moves((10, 8))
+        self.board.make_move(12, 6, "0")
+        self.ui.update_possible_moves((12, 6))
+        self.board.make_move(10, 9, "X")
+        self.ui.update_possible_moves((10, 9))
+        self.board.make_move(12, 7, "0")
+        self.ui.update_possible_moves((12, 7))
+        self.board.make_move(11, 10, "X")
+        self.ui.update_possible_moves((11, 10))
+        self.board.make_move(12, 8, "0")
+        self.ui.update_possible_moves((12, 8))
+        self.board.make_move(12, 10, "X")
+        self.ui.update_possible_moves((12, 10))
+        self.board.make_move(13, 6, "0")
+        self.ui.update_possible_moves((13, 6))
+        self.board.make_move(13, 10, "X")
+        self.ui.update_possible_moves((13, 10))
+        self.board.make_move(14, 10, "0")
+        self.ui.update_possible_moves((14, 10))
+        self.board.make_move(10, 10, "X")
+        self.ui.update_possible_moves((10, 10))
+        self.board.make_move(10, 5, "0")
+        self.ui.update_possible_moves((10, 5))
+
+        result_move = self.ai.minimax(
+            4, True, self.board,
+            float("-inf"), float("inf"), self.ui.possible_moves
+        )
+
+        self.assertEqual(result_move, (100000, (10, 11)))
 
     def test_evaluate_empty_board(self):
         self.assertEqual(self.ai.evaluate_board(self.board), 0)

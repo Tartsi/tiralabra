@@ -15,4 +15,5 @@
 
 - On Tuesday 27.02.2024 I was able to draft a version of iterative deepening. This is the first version and will likely be updated further as the week progresses. It is an required optimization for the project.
 - On Thursday 29.02.2024 I had to scrap most of the progress I made this week, and started finding new solutions for dynamic listing which is a required optimization for the project. I made good progress today and hopefully this improved solution will be final and acceptable.
-- Finished the project on Saturday 02.03.2024.
+- ~~Finished the project on Saturday 02.03.2024~~.
+- Turns out that this was premature as I had not acquired the necessary depth for the AI!
