@@ -27,4 +27,4 @@
 
 - [Release](https://github.com/Tartsi/tiralabra/releases/tag/v1.2.0)
 
-# Grading for project 5/5 15.04.2024
+### Grading for project 5/5 15.04.2024
